@@ -21,6 +21,8 @@ deployAs:
           description: Voucherify API URL
         - key: APPLY_CART_DISCOUNT_AS_CT_DIRECT_DISCOUNT
           description: Apply cart discount as CommerceTools direct discount
+        - key: MAX_CART_UPDATE_RESPONSE_TIME_WITHOUT_CHECKING_IF_API_EXTENSION_TIMED_OUT
+          description: Max cart update response time without checking if API extension timed out
       securedConfiguration:
         - key: COMMERCE_TOOLS_SECRET
           description: CommerceTools secret
