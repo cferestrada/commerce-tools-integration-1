@@ -13,6 +13,7 @@ import {
 } from '../misc/request-json-logger-interface';
 import { OrdersCreate } from '@voucherify/sdk/dist/types/Orders';
 import { mapItemsToVoucherifyOrdersItems } from '../integration/utils/mappers/product';
+import { OrderMapper } from '../integration/utils/mappers/order';
 import { Order, ValidatedCoupons } from '../integration/types';
 import { elapsedTime } from '../misc/elapsedTime';
 
@@ -20,6 +21,7 @@ import { elapsedTime } from '../misc/elapsedTime';
 export class VoucherifyConnectorService {
   constructor(
     private configService: ConfigService,
+    private readonly orderMapper: OrderMapper,
     private logger: Logger,
     @Inject(REQUEST_JSON_LOGGER)
     private readonly requestJsonLogger: RequestJsonLoggerInterface,
@@ -123,7 +125,15 @@ export class VoucherifyConnectorService {
   }
 
   async getAvailablePromotions(cart) {
-    const items = mapItemsToVoucherifyOrdersItems(cart.items);
+    // const items = mapItemsToVoucherifyOrdersItems(cart.items);
+    const metadataSchemaProperties = await this.getMetadataSchemaProperties(
+      'product',
+    );
+    const items = mapItemsToVoucherifyOrdersItems(
+      cart.items,
+      metadataSchemaProperties,
+    );
+
     const promotions = await this.getClient().promotions.validate({
       customer: {
         id: cart.customerId || cart.anonymousId,
