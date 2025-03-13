@@ -1,5 +1,5 @@
 deployAs:
-  - name: voucherify-service
+  - name: voucherify-integration-service
     applicationType: service
     endpoint: /
     scripts:
