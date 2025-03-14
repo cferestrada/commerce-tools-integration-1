@@ -8,6 +8,7 @@ import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
 } from 'nest-winston';
+import express from 'express';
 
 async function bootstrap() {
   const logFormat = winston.format.combine(
@@ -32,6 +33,7 @@ async function bootstrap() {
   });
   logger.log(`Application available ${url}`);
   const app = await NestFactory.create(AppModule, { logger });
+  app.use(express.json({ limit: '50mb' }));
   await app.listen(port);
   logger.log(`Application port - ${port}`);
   const registerService = app.get(ApiExtensionService);

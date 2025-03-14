@@ -5,6 +5,7 @@ import {
   utilities as nestWinstonModuleUtilities,
 } from 'nest-winston';
 import * as winston from 'winston';
+import express from 'express';
 
 async function bootstrap() {
   const logFormat =
@@ -30,7 +31,7 @@ async function bootstrap() {
       ],
     }),
   });
-
+  app.use(express.json({ limit: '50mb' }));
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
